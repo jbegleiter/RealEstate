@@ -1,4 +1,14 @@
-import sys, re, urllib, array
+import sys, re, urllib, array, MySQLdb
+
+def mysqlQuery(query):
+	conn = MySQLdb.connect (host = "localhost", user = "root", passwd = "root", db = "test")
+	cursor = conn.cursor()
+	request = cursor.execute(query)
+	for r in range(request):
+		print cursor.fetchone()
+
+	cursor.close()
+
 
 def callAPI(func, zip):
 	url = 'http://api.trulia.com/webservices.php?library=LocationInfo&function='+func+'&state='+zip+'&apikey=gysqg4zr2z65ycpzxzm47jam'
@@ -15,12 +25,12 @@ def sqlFields(utext):
 	for tuple in tuples:
 		if not (tuple[0] in fields):
 			fields.append(tuple[0])
-			print tuple[0]
+			#print tuple[0]
 			
-
 
 def main():
 	callAPI('getCitiesInState','CA')
+	mysqlQuery('select * from funcTables;')
 
 if __name__ == '__main__':
 	main()
