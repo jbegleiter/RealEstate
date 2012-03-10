@@ -6,7 +6,7 @@ class dataPull():
 		print 'heya'
 
 	def mysqlQuery(self,query):
-		conn = MySQLdb.connect (host = "localhost", user = "root", passwd = "root", db = "test")
+		conn = MySQLdb.connect (host = "localhost", user = "root", passwd = "root", db = "test_realestate")
 		cursor = conn.cursor()
 		request = cursor.execute(query)
 		for r in range(request):
@@ -25,10 +25,17 @@ class dataPull():
 	##temporary	--> Find all API fields returned
 	def sqlFields(self,utext):
 		fields = []
-		t = '<name>Woodlake</name><longitude>-119.105850128324</longitude>'
 		tuples = re.findall(r'<([\w\d\+\.\s/-]+)>([\w\d\+\.\s/-]+)</([\w\d\+\.\s/-]+)>',utext)
 		for tuple in tuples:
 			if not (tuple[0] in fields):
 				fields.append(tuple[0])
 				#print tuple[0]
-		
+
+class dbQuery:
+	input_param = []
+	target_data = []
+	population = {}
+	result_data = {}
+	
+	def  __init__(self):
+		print 'yoyoyoyo'		

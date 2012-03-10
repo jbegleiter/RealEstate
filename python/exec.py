@@ -4,7 +4,7 @@ import lib
 def main():
 	x = lib.dataPull()
 	x.callAPI('getCitiesInState','CA')
-	x.mysqlQuery('select * from funcTables;')
+	x.mysqlQuery("""insert into funcParam (func, param, param_class) values ('getZipCodeStats', 'endDate', 'date');""")
 
 if __name__ == '__main__':
 	main()
