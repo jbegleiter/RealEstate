@@ -1,0 +1,1 @@
+print "{0} ...\n {1}!".format("hey", "there")
