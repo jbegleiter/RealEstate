@@ -91,7 +91,7 @@ class APIcall:
 			 
 
 	#def pop_validate(self):
-		##validate each input -->this.population
+		##validate each input -->this.population, used in compose_request
 		##create db table for input formats
 		#returns true/false
 
@@ -101,7 +101,8 @@ class APIcall:
 		self.utext = ma_ufile.read()
 		
 
-	#def parse_results(self,utext,func):
+	def parse_results(self):
+		return true
 		##lookup result fields in db
 		## insert into dictionary with field names as lookup key
 		## parse structure hardcoded for now, variables returned from db (above)

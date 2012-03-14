@@ -1,4 +1,4 @@
-import sys, re, urllib, array, MySQLdb
+import sys, re, urllib, array, MySQLdb, elementtree
 import lib
 
 def main():
