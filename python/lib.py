@@ -38,21 +38,21 @@ class dbQuery:
 	cursor = '' ##might have to update this
 	
 	def  __init__(self):
-		print 'yoyoyoyo'
+		self.init_conn()
 
 	def init_conn(self):
 		conn = MySQLdb.connect (host = "localhost", user = "root", passwd = "root", db = "test_realestate")
-		cursor = conn.cursor()
-		return cursor
+		self.cursor = conn.cursor()
+		#return cursor
 
-	def close_conn(self,cursor):
-		cursor.close
+	def close_conn(self):
+		self.cursor.close
 
-	def execute(self,cursor,query):
-		request = cursor.execute(query)
+	def execute(self,query):
+		request = self.cursor.execute(query)
 		if (range(request) > 0):
 			for r in range(request):
-				print cursor.fetchone() ##have this added to a dictionary
+				print self.cursor.fetchone() ##have this added to a dictionary
 		else:
 			return false
 
@@ -62,13 +62,17 @@ class APIcall:
 	apikey = 'gysqg4zr2z65ycpzxzm47jam' ##Make this a db table (eventually)
 	root = 'http://api.trulia.com/webservices.php?library='
 	request_url = ''
+	population = {}
 
 	def __init__(self):
 		print 'ahoy'
 
 	#def compose_request(self,func,population):
-		##lookup structure of request in db
+		##For all fields in funcParam, pull relevant field from population{}
+		#print "{0} ...\n {1}!".format("hey", "there")
 		#returns url
+
+		#r_param = 
 
 	#def make_apicall(self,url):
 		#returns utext
