@@ -22,6 +22,7 @@ def main():
 	x.func = 'getCityStats'
 	x.population = pop
 	x.compose_request()
+	x.make_apicall()
 
 if __name__ == '__main__':
 	main()

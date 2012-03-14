@@ -96,8 +96,10 @@ class APIcall:
 		#returns true/false
 
 	def make_apicall(self):
-		#returns utext
-		return true
+		##composes raw data file to be parsed
+		ma_ufile = urllib.urlopen(self.request_url)
+		self.utext = ma_ufile.read()
+		
 
 	#def parse_results(self,utext,func):
 		##lookup result fields in db
