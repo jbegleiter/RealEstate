@@ -34,7 +34,7 @@ class dbQuery:
 	input_param = []
 	target_data = []
 	population = {}
-	result_data = {}
+	result_data = []
 	cursor = '' ##might have to update this
 	
 	def  __init__(self):
@@ -43,7 +43,6 @@ class dbQuery:
 	def init_conn(self):
 		conn = MySQLdb.connect (host = "localhost", user = "root", passwd = "root", db = "test_realestate")
 		self.cursor = conn.cursor()
-		#return cursor
 
 	def close_conn(self):
 		self.cursor.close
@@ -52,7 +51,9 @@ class dbQuery:
 		request = self.cursor.execute(query)
 		if (range(request) > 0):
 			for r in range(request):
-				print self.cursor.fetchone() ##have this added to a dictionary
+				#each sql line is returned as a list item
+				#access by self.result_data[0] or self.result_data[0][0]
+				self.result_data.append(self.cursor.fetchone())
 		else:
 			return false
 
@@ -67,12 +68,17 @@ class APIcall:
 	def __init__(self):
 		print 'ahoy'
 
-	#def compose_request(self,func,population):
+	def compose_request(self,func,population):
 		##For all fields in funcParam, pull relevant field from population{}
 		#print "{0} ...\n {1}!".format("hey", "there")
 		#returns url
 
-		#r_param = 
+		cr_db = dbQuery()
+		cr_db.execute("select param, param_class from funcParam where func = '"+func+"';")
+		for r in cr_db.result_data:
+			print r[0]
+		 
+
 
 	#def make_apicall(self,url):
 		#returns utext
