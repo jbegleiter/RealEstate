@@ -68,20 +68,36 @@ class APIcall:
 	def __init__(self):
 		print 'ahoy'
 
-	def compose_request(self,func,population):
+	def compose_request(self):
 		##For all fields in funcParam, pull relevant field from population{}
 		#print "{0} ...\n {1}!".format("hey", "there")
 		#returns url
 
+		if (re.search("Stats",self.func)):
+			self.request_url = self.root + "TruliaStats&function="+self.func
+		else:
+			self.request_url = self.root + "LocationInfo&function="+self.func
+		
 		cr_db = dbQuery()
-		cr_db.execute("select param, param_class from funcParam where func = '"+func+"';")
+		cr_db.execute("select param, param_class from funcParam where func = '"+self.func+"';")
+
 		for r in cr_db.result_data:
-			print r[0]
-		 
+			cr_param = r[0]; cr_param_class = r[1]
+			if (self.population[cr_param]): #create a function (pop_validate) that checks for correct formatting of inputs
+				self.request_url += "&" + cr_param +"="+ self.population[cr_param]
+			else: break
 
+		self.request_url += "&apikey="+self.apikey
+			 
 
-	#def make_apicall(self,url):
+	#def pop_validate(self):
+		##validate each input -->this.population
+		##create db table for input formats
+		#returns true/false
+
+	def make_apicall(self):
 		#returns utext
+		return true
 
 	#def parse_results(self,utext,func):
 		##lookup result fields in db

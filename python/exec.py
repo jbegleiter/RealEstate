@@ -15,8 +15,13 @@ def main():
 	pop = {}
 	pop["city"] = "cleveland"
 	pop["state"] = "oh"
+	pop["startDate"] = "2009-02-06"
+	pop["endDate"] = "2009-02-07"
+	pop["statType"] = "all"
 	x = lib.APIcall()
-	x.compose_request('getCityStats',pop)
-	
+	x.func = 'getCityStats'
+	x.population = pop
+	x.compose_request()
+
 if __name__ == '__main__':
 	main()
