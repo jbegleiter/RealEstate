@@ -1,5 +1,8 @@
-import sys, re, urllib, array, MySQLdb, elementtree
+import sys, re, urllib, array, MySQLdb
 import lib
+from elementtree.ElementTree import *
+
+#use /usr/lib/python2.6/site-packages easy_install elementtree
 
 def main():
 	# x = lib.dataPull()
@@ -23,6 +26,8 @@ def main():
 	x.population = pop
 	x.compose_request()
 	x.make_apicall()
+	x.parse_results()
+
 
 if __name__ == '__main__':
 	main()

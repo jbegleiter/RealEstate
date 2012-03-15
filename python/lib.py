@@ -1,4 +1,7 @@
-import sys, re, urllib, array, MySQLdb
+import sys, re, urllib, array, MySQLdb, html5lib
+#from elementtree.ElementTree import ElementTree
+from BeautifulSoup import BeautifulSoup 
+from BeautifulSoup import BeautifulStoneSoup 
 
 class dataPull():
 
@@ -64,6 +67,7 @@ class APIcall:
 	root = 'http://api.trulia.com/webservices.php?library='
 	request_url = ''
 	population = {}
+	ma_ufile = ''
 
 	def __init__(self):
 		print 'ahoy'
@@ -97,16 +101,22 @@ class APIcall:
 
 	def make_apicall(self):
 		##composes raw data file to be parsed
-		ma_ufile = urllib.urlopen(self.request_url)
-		self.utext = ma_ufile.read()
+		self.ma_ufile = urllib.urlopen(self.request_url)
+		self.utext = self.ma_ufile.read()
 		
 
 	def parse_results(self):
-		return true
 		##lookup result fields in db
 		## insert into dictionary with field names as lookup key
 		## parse structure hardcoded for now, variables returned from db (above)
+		##use elementtree to parse xml!
 		#returns result_data
+
+		stonesoup = BeautifulStoneSoup(self.utext)
+		#print stonesoup.prettify()
+		#print stonesoup.fetch('averagelistingprice')[0]
+		print stonesoup.name
+	
 
 	#def save_results(self,result_data,func):
 		##look up appropriate sql table to save from a sql table
