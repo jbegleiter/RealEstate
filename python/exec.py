@@ -11,7 +11,7 @@ def main():
 
 	##works
 	# x = lib.dbQuery()
-	# x.execute("select * from funcParam;")
+	# #x.execute("create table xmlResponseTag (id int not null auto_increment, );")
 	# x.close_conn()
 	# print x.result_data[0][0]
 
@@ -27,6 +27,7 @@ def main():
 	x.compose_request()
 	x.make_apicall()
 	x.parse_results()
+	print x.response_data
 
 
 if __name__ == '__main__':

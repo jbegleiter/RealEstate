@@ -1,7 +1,8 @@
 import sys, re, urllib, array, MySQLdb, html5lib
-#from elementtree.ElementTree import ElementTree
+from elementtree.ElementTree import ElementTree, fromstring
 from BeautifulSoup import BeautifulSoup 
 from BeautifulSoup import BeautifulStoneSoup 
+#from lxml import etree
 
 class dataPull():
 
@@ -68,6 +69,8 @@ class APIcall:
 	request_url = ''
 	population = {}
 	ma_ufile = ''
+	response_tags = []
+	response_data = {}
 
 	def __init__(self):
 		print 'ahoy'
@@ -109,13 +112,51 @@ class APIcall:
 		##lookup result fields in db
 		## insert into dictionary with field names as lookup key
 		## parse structure hardcoded for now, variables returned from db (above)
-		##use elementtree to parse xml!
+		##use elementtree to parse xml! - screw lxml
 		#returns result_data
 
-		stonesoup = BeautifulStoneSoup(self.utext)
-		#print stonesoup.prettify()
-		#print stonesoup.fetch('averagelistingprice')[0]
-		print stonesoup.name
+		##get response heading tags --> can make this db call in future
+		if (re.search("Stats",self.func)):
+			self.response_headers = ['trafficStats','listingStat']
+		else:
+			##update this!
+			print 'np'
+
+		treetop = fromstring(self.utext)
+		for header in self.response_headers:
+			tree = treetop.findall('.//'+header)
+			temp = self.traverse(tree)
+			self.response_data[header] = temp
+
+	def traverse(self,tree):
+		for target in tree:
+			print target.tag
+			if (type(target.text) is str): print target.text
+			self.traverse(target)
+
+		# i = 0
+		# print 'top'
+		# for target in tree:
+		# 	print target
+		# 	if (i == 0):
+		# 		d = {}
+		# 	print type(target.text)
+		# 	if (type(target.text) == 'NoneType'):
+		# 		d[target.tag] = target.text
+		# 		print 'yo'
+		# 	else: 
+		# 		self.traverse(target)
+		# 	i+=1
+		# return d
+
+
+
+
+		# treetop = tree.findall('.//')
+		# for target in treetop:
+		# 	print target.tag
+
+		
 	
 
 	#def save_results(self,result_data,func):
