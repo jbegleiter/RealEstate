@@ -27,7 +27,8 @@ def main():
 	x.compose_request()
 	x.make_apicall()
 	x.parse_results()
-	print x.response_data
+	#print x.response_data
+	print x.res_dat
 
 
 if __name__ == '__main__':

@@ -71,6 +71,7 @@ class APIcall:
 	ma_ufile = ''
 	response_tags = []
 	response_data = {}
+	res_dat = []
 
 	def __init__(self):
 		print 'ahoy'
@@ -117,7 +118,7 @@ class APIcall:
 
 		##get response heading tags --> can make this db call in future
 		if (re.search("Stats",self.func)):
-			self.response_headers = ['trafficStats','listingStat']
+			self.response_headers = ['trafficStats','listingStats']
 		else:
 			##update this!
 			print 'np'
@@ -125,39 +126,24 @@ class APIcall:
 		treetop = fromstring(self.utext)
 		for header in self.response_headers:
 			tree = treetop.findall('.//'+header)
-			temp = self.traverse(tree)
-			self.response_data[header] = temp
+			d1 = {}
+			temp = self.traverse(tree,d1)
+			self.response_data[header]=temp
 
-	def traverse(self,tree):
+	def traverse(self,tree, d):
 		for target in tree:
-			print target.tag
-			if (type(target.text) is str): print target.text
-			self.traverse(target)
+			if (type(target.text) is str): 
+				#print target.tag
+				#print target.text
+				d[target.tag]= target.text
+				#print d
+			else:
+				d = {}
+				self.traverse(target,d)
+		print d
+		self.res_dat.append(d)
+		return d		
 
-		# i = 0
-		# print 'top'
-		# for target in tree:
-		# 	print target
-		# 	if (i == 0):
-		# 		d = {}
-		# 	print type(target.text)
-		# 	if (type(target.text) == 'NoneType'):
-		# 		d[target.tag] = target.text
-		# 		print 'yo'
-		# 	else: 
-		# 		self.traverse(target)
-		# 	i+=1
-		# return d
-
-
-
-
-		# treetop = tree.findall('.//')
-		# for target in treetop:
-		# 	print target.tag
-
-		
-	
 
 	#def save_results(self,result_data,func):
 		##look up appropriate sql table to save from a sql table
