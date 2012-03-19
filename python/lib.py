@@ -60,6 +60,9 @@ class dbQuery:
 				self.result_data.append(self.cursor.fetchone())
 		else:
 			return false
+	
+	def clear(self):
+		self.result_data = []
 
 
 class APIcall:
@@ -96,6 +99,7 @@ class APIcall:
 			else: break
 
 		self.request_url += "&apikey="+self.apikey
+		cr_db.close_conn()
 			 
 
 	#def pop_validate(self):
@@ -132,21 +136,36 @@ class APIcall:
 			
 
 	def traverse(self,tree):
-		d={}
+		t_d={}
 		for target in tree:
 			if (type(target.text) is str and len(target.text) > 0):
-				d[target.tag] = target.text
+				t_d[target.tag] = target.text
 			else:
 				self.traverse(target)
-		if (len(d) > 0):
-			self.res_dat.append(d)
+		if (len(t_d) > 0):
+			self.res_dat.append(t_d)
 	
 
-
-	#def save_results(self,result_data,func):
+	def save_results(self):
 		##look up appropriate sql table to save from a sql table
 		##Make sql call to insert into table
 		#return true/false/error message
+		sr_m = dbQuery();
+		sr_m.clear()
+		for header in self.response_headers:
+			print header
+			sr_b = "select distinct param from xmlResponseTag where func = '"+self.func+"' and header = '"+header+"';"
+			print sr_b
+			sr_m.execute(sr_b)
+			sr_xmlParam = sr_m.result_data
+			sr_tableString = ''
+			for sr_xParam in sr_xmlParam:
+				print sr_xParam
+				sr_tableString =sr_tableString + str(sr_xmlParam)+', '
+			sr_tableString = sr_tableString[:-2]
+			
+		sr_m.close_conn()
+
 
 	#def display_results(self,results, func):
 		##this can be used if I'm not sure if I'm sure if the data should be saved

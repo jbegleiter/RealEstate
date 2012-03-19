@@ -7,11 +7,14 @@ from elementtree.ElementTree import *
 def main():
 	# x = lib.dataPull()
 	# x.callAPI('getCitiesInState','CA')
-	# x.mysqlQuery("""insert into funcParam (func, param, param_class) values ('getZipCodeStats', 'endDate', 'date');""")
+	 #x.mysqlQuery("""""")
 
 	##works
 	# x = lib.dbQuery()
-	# #x.execute("create table xmlResponseTag (id int not null auto_increment, );")
+	# x.execute("insert into xmlResponseTag (func, header, param) values ('getCityStats', 'listingStats','type');")
+	# x.execute("insert into xmlResponseTag (func, header, param) values ('getCityStats', 'listingStats','numberOfProperties');")
+	# x.execute("insert into xmlResponseTag (func, header, param) values ('getCityStats', 'listingStats','medianListingPrice');")
+	# x.execute("insert into xmlResponseTag (func, header, param) values ('getCityStats', 'listingStats','averageListingPrice');")
 	# x.close_conn()
 	# print x.result_data[0][0]
 
@@ -27,8 +30,9 @@ def main():
 	x.compose_request()
 	x.make_apicall()
 	x.parse_results()
-	print x.response_data
-	#print x.res_dat
+	# print x.response_data['trafficStats']
+	x.save_results()
+	#x.execute("select param from xmlResponseTag where func = 'getCityStats' and header = 'listingStats';")
 
 
 if __name__ == '__main__':
