@@ -126,23 +126,21 @@ class APIcall:
 		treetop = fromstring(self.utext)
 		for header in self.response_headers:
 			tree = treetop.findall('.//'+header)
-			d1 = {}
-			temp = self.traverse(tree,d1)
-			self.response_data[header]=temp
+			self.res_dat = []
+			self.traverse(tree)
+			self.response_data[header] = self.res_dat
+			
 
-	def traverse(self,tree, d):
+	def traverse(self,tree):
+		d={}
 		for target in tree:
-			if (type(target.text) is str): 
-				#print target.tag
-				#print target.text
-				d[target.tag]= target.text
-				#print d
+			if (type(target.text) is str and len(target.text) > 0):
+				d[target.tag] = target.text
 			else:
-				d = {}
-				self.traverse(target,d)
-		print d
-		self.res_dat.append(d)
-		return d		
+				self.traverse(target)
+		if (len(d) > 0):
+			self.res_dat.append(d)
+	
 
 
 	#def save_results(self,result_data,func):
@@ -152,7 +150,7 @@ class APIcall:
 
 	#def display_results(self,results, func):
 		##this can be used if I'm not sure if I'm sure if the data should be saved
-		#print results
+		#print results@
 
 class pullData:
 	request_input = {}
