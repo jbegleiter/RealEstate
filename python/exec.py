@@ -5,10 +5,6 @@ from elementtree.ElementTree import *
 #use /usr/lib/python2.6/site-packages easy_install elementtree
 
 def main():
-	# x = lib.dataPull()
-	# x.callAPI('getCitiesInState','CA')
-	 #x.mysqlQuery("""""")
-
 	##works
 	#x = lib.dbQuery()
 	#x.execute("update xmlResponseTag set tier = 0 where header = 'trafficStats' ;")

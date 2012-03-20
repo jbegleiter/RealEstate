@@ -1,38 +1,5 @@
 import sys, re, urllib, array, MySQLdb, html5lib
 from elementtree.ElementTree import ElementTree, fromstring
-from BeautifulSoup import BeautifulSoup 
-from BeautifulSoup import BeautifulStoneSoup 
-#from lxml import etree
-
-class dataPull():
-
-	def __init__(self):
-		print 'heya'
-
-	def mysqlQuery(self,query):
-		conn = MySQLdb.connect (host = "localhost", user = "root", passwd = "root", db = "test_realestate")
-		cursor = conn.cursor()
-		request = cursor.execute(query)
-		for r in range(request):
-			print cursor.fetchone()
-		cursor.close()
-
-
-	def callAPI(self,func, zip):
-		url = 'http://api.trulia.com/webservices.php?library=LocationInfo&function='+func+'&state='+zip+'&apikey=gysqg4zr2z65ycpzxzm47jam'
-		ufile = urllib.urlopen(url)
-		utext = ufile.read()
-		self.sqlFields(utext)
-		##print utext
-
-	##temporary	--> Find all API fields returned
-	def sqlFields(self,utext):
-		fields = []
-		tuples = re.findall(r'<([\w\d\+\.\s/-]+)>([\w\d\+\.\s/-]+)</([\w\d\+\.\s/-]+)>',utext)
-		for tuple in tuples:
-			if not (tuple[0] in fields):
-				fields.append(tuple[0])
-				print tuple[0]
 
 class dbQuery:
 	input_param = []
@@ -55,8 +22,6 @@ class dbQuery:
 		request = self.cursor.execute(query)
 		if (range(request) > 0):
 			for r in range(request):
-				#each sql line is returned as a list item
-				#access by self.result_data[0] or self.result_data[0][0]
 				self.result_data.append(self.cursor.fetchone())
 		else:
 			return false
