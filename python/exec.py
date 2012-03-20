@@ -10,28 +10,28 @@ def main():
 	 #x.mysqlQuery("""""")
 
 	##works
-	# x = lib.dbQuery()
-	# x.execute("insert into xmlResponseTag (func, header, param) values ('getCityStats', 'listingStats','type');")
+	#x = lib.dbQuery()
+	#x.execute("update xmlResponseTag set tier = 0 where header = 'trafficStats' ;")
 	# x.execute("insert into xmlResponseTag (func, header, param) values ('getCityStats', 'listingStats','numberOfProperties');")
 	# x.execute("insert into xmlResponseTag (func, header, param) values ('getCityStats', 'listingStats','medianListingPrice');")
 	# x.execute("insert into xmlResponseTag (func, header, param) values ('getCityStats', 'listingStats','averageListingPrice');")
-	# x.close_conn()
+	#x.close_conn()
 	# print x.result_data[0][0]
 
-	pop = {}
-	pop["city"] = "cleveland"
-	pop["state"] = "oh"
-	pop["startDate"] = "2009-02-06"
-	pop["endDate"] = "2009-02-07"
-	pop["statType"] = "all"
-	x = lib.APIcall()
-	x.func = 'getCityStats'
-	x.population = pop
-	x.compose_request()
-	x.make_apicall()
-	x.parse_results()
-	# print x.response_data['trafficStats']
-	x.save_results()
+	# pop = {}
+	# pop["city"] = "cleveland"
+	# pop["state"] = "oh"
+	# pop["startDate"] = "2009-02-06"
+	# pop["endDate"] = "2009-02-07"
+	# pop["statType"] = "all"
+	# x = lib.APIcall()
+	# x.func = 'getCityStats'
+	# x.population = pop
+	# x.compose_request()
+	# x.make_apicall()
+	# x.parse_results()
+	# # print x.response_data['trafficStats']
+	# x.save_results()
 	#x.execute("select param from xmlResponseTag where func = 'getCityStats' and header = 'listingStats';")
 
 

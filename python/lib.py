@@ -117,7 +117,6 @@ class APIcall:
 		##lookup result fields in db
 		## insert into dictionary with field names as lookup key
 		## parse structure hardcoded for now, variables returned from db (above)
-		##use elementtree to parse xml! - screw lxml
 		#returns result_data
 
 		##get response heading tags --> can make this db call in future
@@ -153,16 +152,38 @@ class APIcall:
 		sr_m = dbQuery();
 		sr_m.clear()
 		for header in self.response_headers:
-			print header
 			sr_b = "select distinct param from xmlResponseTag where func = '"+self.func+"' and header = '"+header+"';"
-			print sr_b
 			sr_m.execute(sr_b)
 			sr_xmlParam = sr_m.result_data
-			sr_tableString = ''
+			sr_m.clear()
+			#print self.response_data[header][0]['date']
+			sr_tableString = 'insert into r_'+header+' ('## insert into res_ 
+			
 			for sr_xParam in sr_xmlParam:
-				print sr_xParam
-				sr_tableString =sr_tableString + str(sr_xmlParam)+', '
-			sr_tableString = sr_tableString[:-2]
+				#print sr_xParam
+				sr_tableString =sr_tableString + str(sr_xParam[0])+', '
+			sr_tableString = sr_tableString[:-2]+ ') values '
+			print sr_tableString
+			#print self.response_data[header]
+			for sr_byte in self.response_data[header]:
+				print sr_byte
+				for sr_xParam2 in sr_xmlParam:
+					print sr_xParam2[0]##week ending date is a higher tier. add tier and family to xmlResponseTag
+					#have to apply lower tiers (higher priority) to higher tiers in the same family
+
+
+			# print 'stop'
+			# for sr_val in self.response_data[header]:
+			# 	print sr_val
+			# 	sr_str1 = '( '
+			# 	for sr_xParam2 in sr_xmlParam:
+			# 		print sr_val[sr_xParam2[0]]
+			# 		#sr_str1 += str(sr_val[sr_xParam2[0]])+', '
+			# 	#print sr_str1
+
+			# print sr_tableString
+			# print self.response_data[header]
+			##compose mysql query --> dbtable (header, weekEndingDate, type/key numberOfProperties, medianListingPrice, averageListingPrice)
 			
 		sr_m.close_conn()
 
