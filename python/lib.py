@@ -41,6 +41,7 @@ class APIcall:
 	response_data = {}
 	res_dat = []
 	response_globals = {}
+	save_query = ''
 
 
 	def __init__(self):
@@ -140,18 +141,39 @@ class APIcall:
 			#print self.response_data[header][0]['date']
 			sr_tableString = 'insert into r_'+header+' ('## insert into res_ 
 
-			for sr_xParam in sr_xmlParam:
-				#print sr_xParam
-				sr_tableString =sr_tableString + str(sr_xParam[0])+', '
-			sr_tableString = sr_tableString[:-2]+ ') values '
-			#print sr_tableString
-			#print self.response_data[header]
-			for sr_byte in self.response_data[header]:
-				#print sr_byte
-				for sr_xParam2 in sr_xmlParam:
-					ti = 1
-					#print sr_xParam2[0]##week ending date is a higher tier. add tier and family to xmlResponseTag
-					#have to apply lower tiers (higher priority) to higher tiers in the same family
+			for byte in self.response_data[header]:
+				#print byte
+				sr_fieldString = 'insert ignore into r_'+header+' ( '
+				sr_valueString = 'values ( '
+				for sr_param in sr_xmlParam:
+					#print sr_param[0]
+					sr_fieldString+=str(sr_param[0]) + ', '
+					sr_valueString+="'"+str(byte[sr_param[0]])+"' , "
+				sr_fieldString = sr_fieldString[:-2]+') '
+				sr_valueString = sr_valueString[:-2]+'); '
+				#print sr_fieldString[:-2]+')'
+				#print sr_valueString[:-2]+'); '
+				self.save_query+= sr_fieldString + sr_valueString
+
+			sr_m.execute(self.save_query)
+			sr_m.clear()
+			self.save_query = ''
+		sr_m.close_conn()
+
+
+
+			# for sr_xParam in sr_xmlParam:
+			# 	#print sr_xParam
+			# 	sr_tableString =sr_tableString + str(sr_xParam[0])+', '
+			# sr_tableString = sr_tableString[:-2]+ ') values '
+			# print sr_tableString
+			# #print self.response_data[header]
+			# for sr_byte in self.response_data[header]:
+			# 	#print sr_byte
+			# 	for sr_xParam2 in sr_xmlParam:
+			# 		hi = 1
+			# 		#print sr_xParam2[0]##week ending date is a higher tier. add tier and family to xmlResponseTag
+			# 		#have to apply lower tiers (higher priority) to higher tiers in the same family
 
 
 			# print 'stop'
@@ -167,7 +189,7 @@ class APIcall:
 			# print self.response_data[header]
 			##compose mysql query --> dbtable (header, weekEndingDate, type/key numberOfProperties, medianListingPrice, averageListingPrice)
 
-		sr_m.close_conn()
+		
 
 
 	#def display_results(self,results, func):
