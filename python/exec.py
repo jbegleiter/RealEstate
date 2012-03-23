@@ -6,30 +6,36 @@ from elementtree.ElementTree import *
 
 def main():
 	##works
-	#x = lib.dbQuery()
-	#x.execute("update xmlResponseTag set tier = 0 where header = 'trafficStats' ;")
-	# x.execute("insert into xmlResponseTag (func, header, param) values ('getCityStats', 'listingStats','numberOfProperties');")
-	# x.execute("insert into xmlResponseTag (func, header, param) values ('getCityStats', 'listingStats','medianListingPrice');")
-	# x.execute("insert into xmlResponseTag (func, header, param) values ('getCityStats', 'listingStats','averageListingPrice');")
-	#x.close_conn()
-	# print x.result_data[0][0]
+	# x = lib.dbQuery()
+	# x.execute("""update xmlResponseTag
+	# set tier = 0 where tier = 2; """)
+	# x.close_conn()
+	# print x.result_data
 
-	# pop = {}
-	# pop["city"] = "cleveland"
-	# pop["state"] = "oh"
-	# pop["startDate"] = "2009-02-06"
-	# pop["endDate"] = "2009-02-07"
-	# pop["statType"] = "all"
-	# x = lib.APIcall()
-	# x.func = 'getCityStats'
-	# x.population = pop
-	# x.compose_request()
-	# x.make_apicall()
-	# x.parse_results()
-	# # print x.response_data['trafficStats']
-	# x.save_results()
-	#x.execute("select param from xmlResponseTag where func = 'getCityStats' and header = 'listingStats';")
+	pop = {}
+	pop["city"] = "cleveland"
+	pop["state"] = "oh"
+	pop["startDate"] = "2009-02-01"
+	pop["endDate"] = "2009-02-12"
+	pop["statType"] = "all"
+	x = lib.APIcall()
+	x.func = 'getCityStats'
+	x.population = pop
+	x.compose_request()
+	x.make_apicall()
+	x.parse_results()
+	#print x.request_url
+	#print x.response_data['listingStats']
+	#x.save_results()
+	# #x.execute("select param from xmlResponseTag where func = 'getCityStats' and header = 'listingStats';")
 
 
 if __name__ == '__main__':
 	main()
+
+
+# select distinct A.param, B.param 
+# 		from xmlResponseTag as A
+# 		left join xmlResponseTag as B 
+# 			on A.tier <= B.tier and A.family = B.family and A.header = B.header and A.param <> B.param
+# 		where A.func = 'getCityStats' and A.header = 'listingStats';
