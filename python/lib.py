@@ -22,7 +22,8 @@ class dbQuery:
 		request = self.cursor.execute(query)
 		if (range(request) > 0):
 			for r in range(request):
-				self.result_data.append(self.cursor.fetchone())
+				try: self.result_data.append(self.cursor.fetchone())
+				except: hi = 1###placeholder
 		else:
 			return false
 
@@ -131,9 +132,10 @@ class APIcall:
 		##look up appropriate sql table to save from a sql table
 		##Make sql call to insert into table
 		#return true/false/error message
-		sr_m = dbQuery();
-		sr_m.clear()
+
 		for header in self.response_headers:
+			sr_m = dbQuery();
+			sr_m.clear()
 			sr_b = "select distinct param from xmlResponseTag where func = '"+self.func+"' and header = '"+header+"';"
 			sr_m.execute(sr_b)
 			sr_xmlParam = sr_m.result_data
@@ -158,7 +160,7 @@ class APIcall:
 			sr_m.execute(self.save_query)
 			sr_m.clear()
 			self.save_query = ''
-		sr_m.close_conn()
+			sr_m.close_conn()
 
 
 
