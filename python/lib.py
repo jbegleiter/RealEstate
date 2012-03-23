@@ -103,8 +103,11 @@ class APIcall:
 					#print tree
 					self.res_dat = []; globe = {}
 					self.traverse(tree, globe, header)
-					self.response_data[header] = self.res_dat
-
+					#print self.res_dat
+					if (header in self.response_data.keys()):
+						self.response_data[header] = self.response_data[header] + self.res_dat
+					else:
+						self.response_data[header] = self.res_dat
 
 	def traverse(self,tree, globe, header):
 		t_d={}
@@ -120,7 +123,6 @@ class APIcall:
 			if (len(globe) > 0):
 				for key in globe.keys():
 					t_d[key] = globe[key]
-			print t_d
 			self.res_dat.append(t_d)
 
 

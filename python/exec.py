@@ -28,7 +28,8 @@ def main():
 	#print x.response_data['listingStats']
 	#x.save_results()
 	# #x.execute("select param from xmlResponseTag where func = 'getCityStats' and header = 'listingStats';")
-
+	for a in x.response_data['listingStats']:
+		print a
 
 if __name__ == '__main__':
 	main()
